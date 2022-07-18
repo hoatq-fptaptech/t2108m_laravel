@@ -19,4 +19,10 @@ class Student extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function classes(){
+        // return 1 object Classes
+        //return Classes::where("cid",$this->cid)->first();
+        return $this->belongsTo(Classes::class,"cid","cid");
+    }
 }

@@ -17,3 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get("/about",[WebController::class,"aboutUs"]);
+// Classes group
+Route::get("/class/list",[\App\Http\Controllers\ClassesController::class,"all"]);
+// Students group
+Route::get("/student/list",[\App\Http\Controllers\StudentController::class,"all"]);
