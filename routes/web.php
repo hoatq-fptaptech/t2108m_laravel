@@ -18,11 +18,16 @@ Route::get('/', function () {
 });
 Route::get("/about",[WebController::class,"aboutUs"]);
 // Classes group
-Route::get("/class/list",[\App\Http\Controllers\ClassesController::class,"all"]);
+Route::group(['prefix'=>'class'],function (){
+    Route::get("/class/list",[\App\Http\Controllers\ClassesController::class,"all"]);
+});
+
 // Students group
-Route::get("/student/list",[\App\Http\Controllers\StudentController::class,"all"]);
-Route::get("/student/create",[\App\Http\Controllers\StudentController::class,"form"]);
-Route::post("/student/create",[\App\Http\Controllers\StudentController::class,"create"]);
-Route::get("/student/edit/{id}",[\App\Http\Controllers\StudentController::class,'edit']);
-Route::put("/student/edit/{student}",[\App\Http\Controllers\StudentController::class,'update']);
-Route::delete("/student/delete/{student}",[\App\Http\Controllers\StudentController::class,'delete']);
+Route::group(['prefix'=>"student"],function (){
+    Route::get("/list",[\App\Http\Controllers\StudentController::class,"all"]);
+    Route::get("/create",[\App\Http\Controllers\StudentController::class,"form"]);
+    Route::post("/create",[\App\Http\Controllers\StudentController::class,"create"]);
+    Route::get("/edit/{id}",[\App\Http\Controllers\StudentController::class,'edit']);
+    Route::put("/edit/{student}",[\App\Http\Controllers\StudentController::class,'update']);
+    Route::delete("/delete/{student}",[\App\Http\Controllers\StudentController::class,'delete']);
+});
