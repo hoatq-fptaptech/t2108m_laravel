@@ -35,22 +35,32 @@
                         <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Image</th>
                             <th>Name</th>
-                            <th>Birth</th>
+                            <th>Birthday</th>
                             <th>Class</th>
                             <th>Created At</th>
                             <th>Update At</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($students as $item)
                         <tr>
                             <td>{{$item->sid}}</td>
+                            <td><img src="{{$item->getImage()}}" class="img-circle" width="80"/></td>
                             <td>{{$item->name}}</td>
                             <td>{{$item->birthday}}</td>
                             <td>{{$item->classes->name}}</td>
                             <td>{{$item->created_at}}</td>
                             <td>{{$item->updated_at}}</td>
+                            <td><a href="{{url('/student/edit',['id'=>$item->sid])}}" class="btn btn-outline-info">Edit</a>
+                                <form action="{{url("/student/delete",['student'=>$item->sid])}}" method="post">
+                                    @csrf
+                                    @method("delete")
+                                    <button type="submit" onclick="return confirm('Delete Student {{$item->name}}?');" class="btn btn-outline-danger">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                         </tbody>

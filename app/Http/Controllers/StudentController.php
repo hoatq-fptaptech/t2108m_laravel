@@ -32,14 +32,60 @@ class StudentController extends Controller
     }
 
     public function create(Request $request){
+        $request->validate([
+            'sid'=> 'required|string|unique:students',
+            'name'=>'required',
+            'birthday'=>'required',
+            'image'=> "image|mimes:jpeg,png,jpg,gif"
+        ],[
+            'required'=>'Vui lòng nhập thông tin',
+            'image'=>'Vui lòng nhập đúng ảnh',
+            'mines'=>'Nhập đúng định dạng ảnh'
+        ]);
+       $image = null;
+       if($request->hasFile("image")){
+           $file = $request->file("image");
+           $path = "uploads/";
+           $fileName = time().rand(0,9).$file->getClientOriginalName();
+           $file->move($path,$fileName);
+           $image = $path.$fileName;
+       }
        Student::create(
            [
                "sid"=>$request->get("sid"),
                "name"=>$request->get("name"),
+               'image'=>$image,
                "birthday"=>$request->get("birthday"),
                "cid"=>$request->get("cid"),
            ]
        );
-       return redirect()->to("/student/list");
+       return redirect()->to("/student/list")->with("success","Create student successfully");
+    }
+
+    public function edit($id){
+        $classesList = Classes::all();
+        $student = Student::find($id);// 1 object Student with id
+        return view('student.edit',[
+            'student'=>$student,
+            'classesList'=>$classesList
+        ]);
+    }
+
+    public function update(Request $request,Student $student){
+        $student->update([
+            "name"=>$request->get("name"),
+            "birthday"=>$request->get("birthday"),
+            "cid"=>$request->get("cid"),
+        ]);
+        return redirect()->to("/student/list")->with("success","Update student successfully");
+    }
+
+    public function delete(Student $student){
+        try{
+            $student->delete();
+            return redirect()->to("/student/list")->with("success","Delete student successfully");
+        }catch (\Exception $e){
+            return redirect()->back()->with("error","Delete fail");
+        }
     }
 }

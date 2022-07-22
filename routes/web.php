@@ -23,3 +23,6 @@ Route::get("/class/list",[\App\Http\Controllers\ClassesController::class,"all"])
 Route::get("/student/list",[\App\Http\Controllers\StudentController::class,"all"]);
 Route::get("/student/create",[\App\Http\Controllers\StudentController::class,"form"]);
 Route::post("/student/create",[\App\Http\Controllers\StudentController::class,"create"]);
+Route::get("/student/edit/{id}",[\App\Http\Controllers\StudentController::class,'edit']);
+Route::put("/student/edit/{student}",[\App\Http\Controllers\StudentController::class,'update']);
+Route::delete("/student/delete/{student}",[\App\Http\Controllers\StudentController::class,'delete']);

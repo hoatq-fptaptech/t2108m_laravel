@@ -15,6 +15,7 @@ class Student extends Model
     protected $fillable = [
         'sid',
         'name',
+        'image',
         'birthday',
         'cid',
         'created_at',
@@ -53,5 +54,12 @@ class Student extends Model
             return $query->where("birthday","<=",$fromDate);
         }
         return $query;
+    }
+
+    public function getImage(){
+        if($this->image){
+            return $this->image;
+        }
+        return 'uploads/default.jpeg';
     }
 }
