@@ -74,9 +74,27 @@ class StudentController extends Controller
     }
 
     public function update(Request $request,Student $student){
+        $request->validate([
+            'name'=>'required',
+            'birthday'=>'required',
+           // 'image'=> "image|mimes:jpeg,png,jpg,gif"
+        ],[
+            'required'=>'Vui lòng nhập thông tin',
+            'image'=>'Vui lòng nhập đúng ảnh',
+            'mines'=>'Nhập đúng định dạng ảnh'
+        ]);
+        $image = $student->image;
+        if($request->hasFile("image")){
+            $file = $request->file("image");
+            $path = "uploads/";
+            $fileName = time().rand(0,9).$file->getClientOriginalName();
+            $file->move($path,$fileName);
+            $image = $path.$fileName;
+        }
         $student->update([
             "name"=>$request->get("name"),
             "birthday"=>$request->get("birthday"),
+            "image"=>$image,
             "cid"=>$request->get("cid"),
         ]);
         return redirect()->to($this->_GRID_URL)->with("success","Update student successfully");

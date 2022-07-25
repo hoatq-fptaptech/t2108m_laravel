@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WebController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,7 +16,7 @@ Auth::routes();
 
 include_once "user.php";
 
-Route::middleware("is_admin")->prefix("admin")->group(function (){
+Route::middleware(["auth","is_admin"])->prefix("admin")->group(function (){
     include_once "admin.php";
 });
 

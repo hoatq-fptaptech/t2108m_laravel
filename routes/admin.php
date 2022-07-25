@@ -1,4 +1,7 @@
 <?php
+Route::get('/', function () {
+    return view('welcome');
+});
 // Classes group
 Route::group(['prefix'=>'class'],function (){
     Route::get("/list",[\App\Http\Controllers\ClassesController::class,"all"]);

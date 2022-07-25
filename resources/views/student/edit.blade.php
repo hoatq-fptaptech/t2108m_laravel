@@ -29,6 +29,23 @@
                         <input type="text" value="{{$student->name}}" name="name" class="form-control" id="exampleInputPassword1" placeholder="Enter Name">
                     </div>
                     <div class="form-group">
+                        <label for="exampleInputFile">Image</label>
+                        <div class="input-group">
+                            <img src="{{$student->getImage()}}" class="img-rounded" width="50"/>
+                            <div class="custom-file">
+
+                                <input type="file" name="image" class="custom-file-input" id="exampleInputFile">
+                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text">Upload</span>
+                            </div>
+                        </div>
+                        @error("image")
+                        <p class="text-danger">{{$message}}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputPassword2">Birthday</label>
                         <input type="date" value="{{$student->birthday}}" name="birthday" class="form-control" id="exampleInputPassword2" placeholder="Enter Birthday">
                     </div>
