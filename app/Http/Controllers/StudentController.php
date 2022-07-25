@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
+    private $_GRID_URL = "/admin/student/list";
+
     public function all(Request $request){
 //        $classTable = with(new Classes)->getTable();
 //        $studentTable = with(new Student())->getTable();
@@ -59,7 +61,7 @@ class StudentController extends Controller
                "cid"=>$request->get("cid"),
            ]
        );
-       return redirect()->to("/student/list")->with("success","Create student successfully");
+       return redirect()->to($this->_GRID_URL)->with("success","Create student successfully");
     }
 
     public function edit($id){
@@ -77,13 +79,13 @@ class StudentController extends Controller
             "birthday"=>$request->get("birthday"),
             "cid"=>$request->get("cid"),
         ]);
-        return redirect()->to("/student/list")->with("success","Update student successfully");
+        return redirect()->to($this->_GRID_URL)->with("success","Update student successfully");
     }
 
     public function delete(Student $student){
         try{
             $student->delete();
-            return redirect()->to("/student/list")->with("success","Delete student successfully");
+            return redirect()->to($this->_GRID_URL)->with("success","Delete student successfully");
         }catch (\Exception $e){
             return redirect()->back()->with("error","Delete fail");
         }

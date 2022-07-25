@@ -1,7 +1,7 @@
 @extends("layout")
 @section("content-header")
     <h1>Students List
-        <a href="{{url("/student/create")}}" class="btn btn-outline-info float-right">
+        <a href="{{url("/admin/student/create")}}" class="btn btn-outline-info float-right">
             Create Student
         </a>
     </h1>
@@ -11,7 +11,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <form method="get" action="{{url("/student/list")}}">
+                    <form method="get" action="{{url("/admin/student/list")}}">
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 450px;">
                                 <select name="classID" class="form-control float-right">
@@ -54,8 +54,8 @@
                             <td>{{$item->classes->name}}</td>
                             <td>{{$item->created_at}}</td>
                             <td>{{$item->updated_at}}</td>
-                            <td><a href="{{url('/student/edit',['id'=>$item->sid])}}" class="btn btn-outline-info">Edit</a>
-                                <form action="{{url("/student/delete",['student'=>$item->sid])}}" method="post">
+                            <td><a href="{{url('/admin/student/edit',['id'=>$item->sid])}}" class="btn btn-outline-info">Edit</a>
+                                <form action="{{url("/admin/student/delete",['student'=>$item->sid])}}" method="post">
                                     @csrf
                                     @method("delete")
                                     <button type="submit" onclick="return confirm('Delete Student {{$item->name}}?');" class="btn btn-outline-danger">Delete</button>

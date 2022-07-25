@@ -12,22 +12,12 @@ use App\Http\Controllers\WebController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get("/about",[WebController::class,"aboutUs"]);
-// Classes group
-Route::group(['prefix'=>'class'],function (){
-    Route::get("/class/list",[\App\Http\Controllers\ClassesController::class,"all"]);
+include_once "user.php";
+
+Route::middleware("is_admin")->prefix("admin")->group(function (){
+    include_once "admin.php";
 });
 
-// Students group
-Route::group(['prefix'=>"student"],function (){
-    Route::get("/list",[\App\Http\Controllers\StudentController::class,"all"]);
-    Route::get("/create",[\App\Http\Controllers\StudentController::class,"form"]);
-    Route::post("/create",[\App\Http\Controllers\StudentController::class,"create"]);
-    Route::get("/edit/{id}",[\App\Http\Controllers\StudentController::class,'edit']);
-    Route::put("/edit/{student}",[\App\Http\Controllers\StudentController::class,'update']);
-    Route::delete("/delete/{student}",[\App\Http\Controllers\StudentController::class,'delete']);
-});
+

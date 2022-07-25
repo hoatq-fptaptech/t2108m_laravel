@@ -1,7 +1,7 @@
 @extends("layout")
 @section("content-header")
     <h1>Create a student
-        <a href="{{url("/student/list")}}" class="btn btn-outline-info float-right">
+        <a href="{{url("/admin/student/list")}}" class="btn btn-outline-info float-right">
             Back to list
         </a>
     </h1>
@@ -16,7 +16,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form role="form" method="post" action="{{url("/student/create")}}" enctype="multipart/form-data">
+            <form role="form" method="post" action="{{url("/admin/student/create")}}" enctype="multipart/form-data">
                 @csrf
                 @method("post")
                 <div class="card-body">
