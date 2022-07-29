@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classes;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class StudentController extends Controller
 {
@@ -61,6 +62,9 @@ class StudentController extends Controller
                "cid"=>$request->get("cid"),
            ]
        );
+       Cache::forget("home_data");
+       //
+       // Cache::flush();
        return redirect()->to($this->_GRID_URL)->with("success","Create student successfully");
     }
 
