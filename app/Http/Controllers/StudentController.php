@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CreateAStudent;
 use App\Models\Classes;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -53,7 +54,7 @@ class StudentController extends Controller
            $file->move($path,$fileName);
            $image = $path.$fileName;
        }
-       Student::create(
+        $student = Student::create(
            [
                "sid"=>$request->get("sid"),
                "name"=>$request->get("name"),
@@ -62,9 +63,11 @@ class StudentController extends Controller
                "cid"=>$request->get("cid"),
            ]
        );
-       Cache::forget("home_data");
-       //
-       // Cache::flush();
+       // them data trong table notifications
+        // notify cho admin
+       // clear cache
+       event(new CreateAStudent($student));
+
        return redirect()->to($this->_GRID_URL)->with("success","Create student successfully");
     }
 
