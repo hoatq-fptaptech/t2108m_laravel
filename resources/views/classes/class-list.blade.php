@@ -53,3 +53,22 @@
         </div>
     </div>
 @endsection
+@section("custom_script")
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+       // Pusher.logToConsole = true;
+        var pusher = new Pusher('{{env("PUSHER_APP_KEY")}}', {
+            cluster: '{{env("PUSHER_APP_CLUSTER")}}'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            $("#notification-badge").text(1);
+            $("#notification-badge").show();
+            $("#no-notify").hide();
+            $("#has-notify").show();
+            $("#has-notify .msg").text(data);
+        });
+    </script>
+@endsection

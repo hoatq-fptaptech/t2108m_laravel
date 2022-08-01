@@ -11,6 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
+
 class CreateAStudent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
@@ -34,8 +35,8 @@ class CreateAStudent
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
-    }
+//    public function broadcastOn()
+//    {
+//        return new PrivateChannel('channel-name');
+//    }
 }

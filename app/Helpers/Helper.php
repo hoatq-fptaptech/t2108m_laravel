@@ -1,5 +1,7 @@
 <?php
 // khai bao cac ham helper
+use Pusher\Pusher;
+
 function is_admin(){
     if(!\Illuminate\Support\Facades\Auth::check())
         return false;
@@ -17,4 +19,18 @@ function url_after_login(){
         return "/admin/student/list";
     }
     return "/";
+}
+
+function notify_user($channel,$event,$data){
+    $options = array(
+        'cluster' => env("PUSHER_APP_CLUSTER"),
+        'useTLS' => true
+    );
+    $pusher = new Pusher(
+        env("PUSHER_APP_KEY"),
+        env("PUSHER_APP_SECRET"),
+        env("PUSHER_APP_ID"),
+        $options
+    );
+    $pusher->trigger($channel, $event, $data);
 }

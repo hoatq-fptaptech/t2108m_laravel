@@ -29,12 +29,16 @@ class NotificationAfterCreateStudent
      */
     public function handle(CreateAStudent $event)
     {
-        $nt = Notification::create([
+        $message = Auth::user()->name." vừa thêm sinh viên "
+            .$event->_student->name." vào lớp ".$event->_student->classes->name;
+        Notification::create([
             "title"=>"Vừa thêm 1 sinh viên mới vào danh sách",
-            "description"=> Auth::user()->name." vừa thêm sinh viên "
-                .$event->_student->name." vào lớp ".$event->_student->classes->name
+            "description"=> $message
         ]);
         Cache::forget("home_data");
         // Cache::flush();
+
+        // notify to user
+        notify_user("my-channel","my-event",$message);
     }
 }
