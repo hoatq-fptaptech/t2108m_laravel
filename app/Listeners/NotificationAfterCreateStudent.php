@@ -31,7 +31,7 @@ class NotificationAfterCreateStudent
     {
         $message = Auth::user()->name." vừa thêm sinh viên "
             .$event->_student->name." vào lớp ".$event->_student->classes->name;
-        Notification::create([
+        $nt = Notification::create([
             "title"=>"Vừa thêm 1 sinh viên mới vào danh sách",
             "description"=> $message
         ]);
@@ -39,6 +39,6 @@ class NotificationAfterCreateStudent
         // Cache::flush();
 
         // notify to user
-        notify_user("my-channel","my-event",$message);
+        notify_user("my-channel","my-event",$nt->toJson());
     }
 }

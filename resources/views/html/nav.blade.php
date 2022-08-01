@@ -33,19 +33,26 @@
                 <i class="far fa-comments"></i>
                 <span id="notification-badge" style="display: none;" class="badge badge-danger navbar-badge">3</span>
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <p id="no-notify">No notification any yet</p>
-                <a id="has-notify" style="display: none" href="#" class="dropdown-item">
-                    <!-- Message Start -->
+            <div id="notifications" class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                @forelse(\App\Models\Notification::limit(3)
+                    ->orderBy("created_at","desc")->get() as $item)
+                <a href="#" class="dropdown-item">
                     <div class="media">
                         <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                         <div class="media-body">
-                            <p class="text-sm msg">Call me whenever you can...</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            <p class="text-sm msg">{{$item->description}}</p>
+                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>
+                                {{$item->created_at}}</p>
                         </div>
                     </div>
-                    <!-- Message End -->
                 </a>
+                @empty
+                    <a href="#" class="dropdown-item">
+                        <div class="media">
+                            <p>No notification any yet</p>
+                        </div>
+                    </a>
+                @endforelse
             </div>
         </li>
         <!-- Notifications Dropdown Menu -->

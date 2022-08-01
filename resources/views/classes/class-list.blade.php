@@ -56,6 +56,19 @@
 @section("custom_script")
     <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
     <script>
+
+        function render_notification_html(description,created_at){
+            return  "<a href=\"#\" class=\"dropdown-item\">\n" +
+                "                    <div class=\"media\">\n" +
+                "                        <img src=\"dist/img/user1-128x128.jpg\" alt=\"User Avatar\" class=\"img-size-50 mr-3 img-circle\">\n" +
+                "                        <div class=\"media-body\">\n" +
+                "                            <p class=\"text-sm msg\">"+description+"</p>\n" +
+                "                            <p class=\"text-sm text-muted\"><i class=\"far fa-clock mr-1\"></i>\n" +
+                "                                "+created_at+"</p>\n" +
+                "                        </div>\n" +
+                "                    </div>\n" +
+                "                </a>"
+        }
         // Enable pusher logging - don't include this in production
        // Pusher.logToConsole = true;
         var pusher = new Pusher('{{env("PUSHER_APP_KEY")}}', {
@@ -64,11 +77,10 @@
 
         var channel = pusher.subscribe('my-channel');
         channel.bind('my-event', function(data) {
-            $("#notification-badge").text(1);
+            $("#notification-badge").text(parseInt($("#notification-badge").text())+1);
             $("#notification-badge").show();
-            $("#no-notify").hide();
-            $("#has-notify").show();
-            $("#has-notify .msg").text(data);
+            data = JSON.parse(data);
+            $("#notifications").prepend(render_notification_html(data.description,data.created_at))
         });
     </script>
 @endsection
