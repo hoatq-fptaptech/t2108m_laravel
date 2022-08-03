@@ -3,11 +3,13 @@
 namespace App\Listeners;
 
 use App\Events\CreateAStudent;
+use App\Mail\MailFromAdmin;
 use App\Models\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 
 class NotificationAfterCreateStudent
 {
@@ -40,5 +42,9 @@ class NotificationAfterCreateStudent
 
         // notify to user
         notify_user("my-channel","my-event",$nt->toJson());
+
+        // send email
+        Mail::to("quanghoa.trinh@gmail.com")
+            ->send(new MailFromAdmin($event->_student));
     }
 }

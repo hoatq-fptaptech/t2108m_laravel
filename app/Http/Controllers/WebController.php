@@ -33,4 +33,16 @@ class WebController extends Controller
     public function aboutUs(){
         return view("about-us");
     }
+
+    public function apiStudents(Request $request){
+        $limit = $request->has("limit")?$request->get("limit"):20;
+        $page = $request->has("page")?$request->get("page"):1;
+        $offset = ($page-1)*$limit;
+        $students = Student::skip($offset)->limit($limit)->select("*")->get();
+        return response()->json([
+            "status"=> true,
+            "message"=> "Success",
+            "datas"=>$students
+        ]);
+    }
 }
